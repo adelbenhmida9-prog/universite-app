@@ -1,28 +1,73 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import StudentCard from "./components/StudentCard";
+import Footer from "./components/Footer";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="fiche">
-      <h1>Fiche étudiant</h1>
+  const etudiants = [
+    {
+      prenom: "Slim",
+      nom: "Boubaker",
+      email: "slimboubaker@gmail.com",
+      telephone: "+216 99 999 999",
+      filiere: "Génie Logiciel et Systèmes d'Information",
+      annee: "2ème année",
+      groupe: "GLSI 2",
+      ville: "Mahdia",
+    },
+    {
+      prenom: "Sarra",
+      nom: "Trabelsi",
+      email: "sarra@gmail.com",
+      telephone: "+216 20 000 000",
+      filiere: "Génie Logiciel et Systèmes d'Information",
+      annee: "2ème année",
+      groupe: "GLSI 2",
+      ville: "Tunis",
+    },
+    {
+      prenom: "Mariem",
+      nom: "Khalfallah",
+      email: "mariem@gmail.com",
+      telephone: "+216 21 000 000",
+      filiere: "Génie Logiciel et Systèmes d'Information",
+      annee: "2ème année",
+      groupe: "GLSI 2",
+      ville: "Sousse",
+    },
+  ];
 
-      <div className="infos">
-        <p><strong>Nom & Prénom :</strong> adel ben hamida</p>
-        <p><strong>Email :</strong> adelbenhmida9@gmail.com</p>
-        <p><strong>Téléphone :</strong> +216 54 576 087</p>
-        <p>
-          <strong>Filière :</strong> Génie Logiciel et Systèmes d’Information
-        </p>
-        <p><strong>Année d'étude :</strong></p>
-        <p><strong>Groupe :</strong> GLSI 2</p>
-        <p><strong>Ville :</strong> Mahdia</p>
+  return (
+    <div id="accueil">
+      <Header />
+      <Navbar />
+
+      <main id="etudiants">
+        <h2 className="titre-section">Liste des étudiants</h2>
+
+        <div className="students-container">
+          {etudiants.map((etudiant) => (
+            <StudentCard
+              key={etudiant.email}
+              prenom={etudiant.prenom}
+              nom={etudiant.nom}
+              email={etudiant.email}
+              telephone={etudiant.telephone}
+              filiere={etudiant.filiere}
+              annee={etudiant.annee}
+              groupe={etudiant.groupe}
+              ville={etudiant.ville}
+            />
+          ))}
+        </div>
+      </main>
+
+      <div id="contact">
+        <Footer />
       </div>
     </div>
   );
 }
 
 export default App;
-
