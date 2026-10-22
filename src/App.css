@@ -1,0 +1,47 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+}
+
+.fiche {
+  width: 100%;
+  padding: 12px 20px 40px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 62px;
+  font-weight: 400;
+  color: #050505;
+}
+
+.infos {
+  color: #777589;
+  font-size: 20px;
+  line-height: 1.55;
+}
+
+.infos p {
+  margin: 0;
+}
+
+.infos strong {
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 38px;
+  }
+
+  .infos {
+    font-size: 15px;
+  }
+}
