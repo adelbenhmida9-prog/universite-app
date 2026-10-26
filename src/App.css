@@ -154,3 +154,77 @@ body {
     font-size: 28px;
   }
 }
+
+.btn-ajouter {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 12px 24px;
+  background-color: #356df1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-ajouter:hover {
+  background-color: #f57f2a;
+}
+
+.btn-modifier,
+.btn-supprimer {
+  display: inline-block;
+  margin: 6px 4px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-modifier {
+  background-color: #f57f2a;
+}
+
+.btn-supprimer {
+  background-color: #d93636;
+}
+
+.btn-modifier:hover {
+  background-color: #d96818;
+}
+
+.btn-supprimer:hover {
+  background-color: #a82020;
+}
+
+.coordonnees {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f5f6fa;
+  border-radius: 6px;
+}
+
+.filtre {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px;
+}
+
+.filtre select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.nombre-etudiants,
+.aucun-etudiant {
+  text-align: center;
+  margin: 15px;
+  color: #555;
+}
