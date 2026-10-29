@@ -1,0 +1,159 @@
+
+.formulaire-etudiant {
+  margin: 28px 0;
+  padding: 26px;
+  background: linear-gradient(145deg, #141a27, #10131b);
+  border: 1px solid #2b3850;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+}
+
+.formulaire-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.formulaire-header h2 {
+  margin: 0 0 8px;
+  color: #f8fafc;
+  font-size: 22px;
+}
+
+.formulaire-header p {
+  margin: 0;
+  color: #929bad;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.formulaire-close {
+  width: 36px;
+  height: 36px;
+  color: #cbd5e1;
+  background: #202635;
+  border: 1px solid #343d50;
+  border-radius: 9px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.formulaire-close:hover {
+  color: white;
+  background: #30394b;
+}
+
+.formulaire-grille {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.champ-formulaire {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.champ-formulaire label {
+  color: #d1d5db;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.champ-formulaire input,
+.champ-formulaire select {
+  width: 100%;
+  min-height: 45px;
+  padding: 12px 13px;
+  color: #f3f4f6;
+  background: #0b0f17;
+  border: 1px solid #30394c;
+  border-radius: 9px;
+}
+
+.champ-formulaire input::placeholder {
+  color: #687386;
+}
+
+.champ-formulaire input:focus,
+.champ-formulaire select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.champ-formulaire select option {
+  color: #f3f4f6;
+  background: #11141d;
+}
+
+.formulaire-erreur {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  color: #fecaca;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.formulaire-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #252b3a;
+}
+
+.formulaire-btn-annuler,
+.formulaire-btn-enregistrer {
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.formulaire-btn-annuler {
+  color: #cbd5e1;
+  background: #202635;
+  border: 1px solid #343d50;
+}
+
+.formulaire-btn-annuler:hover {
+  background: #30394b;
+}
+
+.formulaire-btn-enregistrer {
+  color: white;
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  border: 1px solid #4f75f5;
+}
+
+.formulaire-btn-enregistrer:hover {
+  filter: brightness(1.12);
+}
+
+@media (max-width: 650px) {
+  .formulaire-etudiant {
+    padding: 19px;
+  }
+
+  .formulaire-grille {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .formulaire-actions {
+    flex-direction: column-reverse;
+  }
+
+  .formulaire-actions button {
+    width: 100%;
+  }
+}

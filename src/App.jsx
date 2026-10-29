@@ -3,79 +3,78 @@ import { useState } from "react";
 
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
-import StudentCard from "./components/StudentCard";
 import Footer from "./components/Footer";
+import StudentCard from "./components/StudentCard";
+import AddStudentForm from "./components/AddStudentForm";
+import StudentFilter from "./components/StudentFilter";
+import StudentCount from "./components/StudentCount";
+
 import "./App.css";
 
+const etudiantsInitiaux = [
+  {
+    prenom: "Slim",
+    nom: "Boubaker",
+    email: "slimboubaker@gmail.com",
+    telephone: "+216 99 999 999",
+    filiere: "GLSI",
+    annee: "2ème année",
+    groupe: "GLSI 2",
+    ville: "Mahdia",
+  },
+  {
+    prenom: "Sarra",
+    nom: "Trabelsi",
+    email: "sarra@gmail.com",
+    telephone: "+216 20 000 000",
+    filiere: "GLSI",
+    annee: "2ème année",
+    groupe: "GLSI 2",
+    ville: "Tunis",
+  },
+  {
+    prenom: "Mariem",
+    nom: "Khalfallah",
+    email: "mariem@gmail.com",
+    telephone: "+216 21 000 000",
+    filiere: "Informatique",
+    annee: "2ème année",
+    groupe: "INFO 2",
+    ville: "Sousse",
+  },
+];
+
 function App() {
-  const [etudiants, setEtudiants] = useState([
-    {
-      prenom: "Slim",
-      nom: "Boubaker",
-      email: "slimboubaker@gmail.com",
-      telephone: "+216 99 999 999",
-      filiere: "GLSI",
-      annee: "2ème année",
-      groupe: "GLSI 2",
-      ville: "Mahdia",
-    },
-    {
-      prenom: "Sarra",
-      nom: "Trabelsi",
-      email: "sarra@gmail.com",
-      telephone: "+216 20 000 000",
-      filiere: "GLSI",
-      annee: "2ème année",
-      groupe: "GLSI 2",
-      ville: "Tunis",
-    },
-    {
-      prenom: "Mariem",
-      nom: "Khalfallah",
-      email: "mariem@gmail.com",
-      telephone: "+216 21 000 000",
-      filiere: "Informatique",
-      annee: "2ème année",
-      groupe: "INFO 2",
-      ville: "Sousse",
-    },
-  ]);
+  const [etudiants, setEtudiants] = useState(etudiantsInitiaux);
+  const [filiereSelectionnee, setFiliereSelectionnee] = useState("Toutes");
+  const [formulaireOuvert, setFormulaireOuvert] = useState(false);
 
-  const [filiereSelectionnee, setFiliereSelectionnee] =
-    useState("Toutes");
+  const ajouterEtudiant = (nouvelEtudiant) => {
+    const emailExiste = etudiants.some(
+      (etudiant) =>
+        etudiant.email.toLowerCase() === nouvelEtudiant.email.toLowerCase()
+    );
 
-  // Ajouter un étudiant
-  const ajouterEtudiant = () => {
-    const nouvelEtudiant = {
-      prenom: "Ahmed",
-      nom: "Ben Ali",
-      email: `ahmed${Date.now()}@gmail.com`,
-      telephone: "+216 22 222 222",
-      filiere: "GLSI",
-      annee: "2ème année",
-      groupe: "GLSI 2",
-      ville: "Sfax",
-    };
+    if (emailExiste) {
+      return "Cette adresse email existe déjà.";
+    }
 
-    setEtudiants((anciensEtudiants) => [
-      ...anciensEtudiants,
-      nouvelEtudiant,
-    ]);
+    setEtudiants((anciens) => [...anciens, nouvelEtudiant]);
+    setFiliereSelectionnee("Toutes");
+    setFormulaireOuvert(false);
+
+    return null;
   };
 
-  // Supprimer un étudiant
   const supprimerEtudiant = (email) => {
-    setEtudiants((anciensEtudiants) =>
-      anciensEtudiants.filter(
-        (etudiant) => etudiant.email !== email
-      )
+    setEtudiants((anciens) =>
+      anciens.filter((etudiant) => etudiant.email !== email)
     );
   };
 
-  // Modifier le prénom
   const modifierPrenom = (email, nouveauPrenom) => {
-    setEtudiants((anciensEtudiants) =>
-      anciensEtudiants.map((etudiant) =>
+    setEtudiants((anciens) =>
+      anciens.map((etudiant) =>
         etudiant.email === email
           ? { ...etudiant, prenom: nouveauPrenom }
           : etudiant
@@ -83,7 +82,6 @@ function App() {
     );
   };
 
-  // Filtrer par filière
   const etudiantsFiltres = etudiants.filter(
     (etudiant) =>
       filiereSelectionnee === "Toutes" ||
@@ -95,56 +93,68 @@ function App() {
       <Header />
       <Navbar />
 
-      <main id="etudiants">
-        <h2 className="titre-section">
-          Liste des étudiants
-        </h2>
+      <main id="etudiants" className="dashboard">
+        <section className="dashboard-header">
+          <div>
+            <h1 className="dashboard-title">Student Management</h1>
+            <p className="dashboard-subtitle">
+              Gérez vos étudiants simplement depuis votre espace.
+            </p>
+          </div>
 
-        <button
-          onClick={ajouterEtudiant}
-          className="btn-ajouter"
-        >
-          Ajouter un étudiant
-        </button>
-
-        <div className="filtre">
-          <label htmlFor="filiere">
-            Filtrer par filière :
-          </label>
-
-          <select
-            id="filiere"
-            value={filiereSelectionnee}
-            onChange={(e) =>
-              setFiliereSelectionnee(e.target.value)
-            }
+          <button
+            type="button"
+            className="btn-ajouter"
+            onClick={() => setFormulaireOuvert(true)}
           >
-            <option value="Toutes">Toutes les filières</option>
-            <option value="GLSI">GLSI</option>
-            <option value="Informatique">Informatique</option>
-          </select>
-        </div>
+            <span aria-hidden="true">＋</span>
+            Ajouter un étudiant
+          </button>
+        </section>
 
-        <p className="nombre-etudiants">
-          Nombre d'étudiants : {etudiantsFiltres.length}
-        </p>
-
-        <div className="students-container">
-          {etudiantsFiltres.map((etudiant) => (
-            <StudentCard
-              key={etudiant.email}
-              {...etudiant}
-              onSupprimer={supprimerEtudiant}
-              onModifier={modifierPrenom}
-            />
-          ))}
-        </div>
-
-        {etudiantsFiltres.length === 0 && (
-          <p className="aucun-etudiant">
-            Aucun étudiant trouvé.
-          </p>
+        {formulaireOuvert && (
+          <AddStudentForm
+            onAdd={ajouterEtudiant}
+            onCancel={() => setFormulaireOuvert(false)}
+          />
         )}
+
+        <StudentCount count={etudiants.length} />
+
+        <section className="students-section">
+          <div className="section-heading">
+            <div>
+              <h2>Liste des étudiants</h2>
+              <p>Consultez les fiches et gérez les informations.</p>
+            </div>
+
+            <span className="resultat-badge">
+              {etudiantsFiltres.length} résultat(s)
+            </span>
+          </div>
+
+          <StudentFilter
+            value={filiereSelectionnee}
+            onChange={setFiliereSelectionnee}
+          />
+
+          <div className="students-container">
+            {etudiantsFiltres.map((etudiant) => (
+              <StudentCard
+                key={etudiant.email}
+                {...etudiant}
+                onSupprimer={supprimerEtudiant}
+                onModifier={modifierPrenom}
+              />
+            ))}
+          </div>
+
+          {etudiantsFiltres.length === 0 && (
+            <p className="aucun-etudiant">
+              Aucun étudiant trouvé pour cette filière.
+            </p>
+          )}
+        </section>
       </main>
 
       <div id="contact">

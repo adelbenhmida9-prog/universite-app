@@ -1,0 +1,13 @@
+
+.student-count {
+  display: table;
+  margin: 24px auto;
+  padding: 15px 20px;
+  color: #bfdbfe;
+  background: #101a2c;
+  border: 1px solid #234477;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
