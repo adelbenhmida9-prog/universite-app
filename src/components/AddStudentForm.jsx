@@ -1,221 +1,131 @@
-
 import { useState } from "react";
 import "./AddStudentForm.css";
 
-const formulaireInitial = {
-  prenom: "",
-  nom: "",
-  email: "",
-  telephone: "",
-  filiere: "GLSI",
-  annee: "2ème année",
-  groupe: "GLSI 2",
-  ville: "",
-};
+function StudentForm({ onAjouter }) {
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [filiere, setFiliere] = useState("");
+  const [anneeEtude, setAnneeEtude] = useState("");
+  const [groupe, setGroupe] = useState("");
+  const [ville, setVille] = useState("");
+  const [image, setImage] = useState("");
 
-function AddStudentForm({ onAdd, onCancel }) {
-  const [formData, setFormData] = useState(formulaireInitial);
-  const [erreur, setErreur] = useState("");
+  const handleImage = (e) => {
+    const fichier = e.target.files[0];
 
-  const modifierChamp = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((ancien) => ({
-      ...ancien,
-      [name]: value,
-    }));
-
-    setErreur("");
+    if (fichier) {
+      setImage(URL.createObjectURL(fichier));
+    }
   };
 
-  const gererChangementFiliere = (e) => {
-    const filiere = e.target.value;
-
-    setFormData((ancien) => ({
-      ...ancien,
-      filiere,
-      groupe: filiere === "GLSI" ? "GLSI 2" : "INFO 2",
-    }));
-  };
-
-  const soumettreFormulaire = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const etudiant = {
-      prenom: formData.prenom.trim(),
-      nom: formData.nom.trim(),
-      email: formData.email.trim().toLowerCase(),
-      telephone: formData.telephone.trim(),
-      filiere: formData.filiere,
-      annee: formData.annee,
-      groupe: formData.groupe.trim(),
-      ville: formData.ville.trim(),
+    const nouvelEtudiant = {
+      nom,
+      prenom,
+      email,
+      telephone,
+      filiere,
+      annee: anneeEtude,
+      groupe,
+      ville,
+      image
     };
 
-    if (
-      !etudiant.prenom ||
-      !etudiant.nom ||
-      !etudiant.email ||
-      !etudiant.telephone ||
-      !etudiant.groupe ||
-      !etudiant.ville
-    ) {
-      setErreur("Remplissez tous les champs obligatoires.");
-      return;
-    }
+    onAjouter(nouvelEtudiant);
 
-    const messageErreur = onAdd(etudiant);
-
-    if (messageErreur) {
-      setErreur(messageErreur);
-    }
+    setNom("");
+    setPrenom("");
+    setEmail("");
+    setTelephone("");
+    setFiliere("");
+    setAnneeEtude("");
+    setGroupe("");
+    setVille("");
+    setImage("");
   };
 
   return (
-    <section className="formulaire-etudiant">
-      <div className="formulaire-header">
-        <div>
-          <h2>Nouvel étudiant</h2>
-          <p>Remplissez les coordonnées de l'étudiant.</p>
+    <div className="student-form-container">
+      <h2>Ajouter un étudiant</h2>
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="nom">Nom :</label>
+          <input type="text" id="nom" value={nom}
+            onChange={(e) => setNom(e.target.value)} required />
         </div>
 
-        <button
-          type="button"
-          className="formulaire-close"
-          onClick={onCancel}
-          aria-label="Fermer le formulaire"
-        >
-          ×
-        </button>
-      </div>
-
-      <form onSubmit={soumettreFormulaire}>
-        <div className="formulaire-grille">
-          <div className="champ-formulaire">
-            <label htmlFor="prenom">Prénom *</label>
-            <input
-              id="prenom"
-              name="prenom"
-              value={formData.prenom}
-              onChange={modifierChamp}
-              placeholder="Ex. Ahmed"
-              required
-            />
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="nom">Nom *</label>
-            <input
-              id="nom"
-              name="nom"
-              value={formData.nom}
-              onChange={modifierChamp}
-              placeholder="Ex. Ben Ali"
-              required
-            />
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="email">Adresse email *</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={modifierChamp}
-              placeholder="etudiant@example.com"
-              required
-            />
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="telephone">Téléphone *</label>
-            <input
-              id="telephone"
-              name="telephone"
-              type="tel"
-              value={formData.telephone}
-              onChange={modifierChamp}
-              placeholder="+216 ..."
-              required
-            />
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="filiereEtudiant">Filière *</label>
-            <select
-              id="filiereEtudiant"
-              name="filiere"
-              value={formData.filiere}
-              onChange={gererChangementFiliere}
-            >
-              <option value="GLSI">GLSI</option>
-              <option value="Informatique">Informatique</option>
-            </select>
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="annee">Année d'étude *</label>
-            <select
-              id="annee"
-              name="annee"
-              value={formData.annee}
-              onChange={modifierChamp}
-            >
-              <option>1ère année</option>
-              <option>2ème année</option>
-              <option>3ème année</option>
-              <option>Master 1</option>
-              <option>Master 2</option>
-            </select>
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="groupe">Groupe *</label>
-            <input
-              id="groupe"
-              name="groupe"
-              value={formData.groupe}
-              onChange={modifierChamp}
-              required
-            />
-          </div>
-
-          <div className="champ-formulaire">
-            <label htmlFor="ville">Ville *</label>
-            <input
-              id="ville"
-              name="ville"
-              value={formData.ville}
-              onChange={modifierChamp}
-              placeholder="Ex. Mahdia"
-              required
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="prenom">Prénom :</label>
+          <input type="text" id="prenom" value={prenom}
+            onChange={(e) => setPrenom(e.target.value)} required />
         </div>
 
-        {erreur && (
-          <p className="formulaire-erreur" role="alert">
-            {erreur}
-          </p>
+        <div className="form-group">
+          <label htmlFor="email">Email :</label>
+          <input type="email" id="email" value={email}
+            onChange={(e) => setEmail(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="telephone">Téléphone :</label>
+          <input type="tel" id="telephone" value={telephone}
+            onChange={(e) => setTelephone(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="filiere">Filière :</label>
+          <select id="filiere" value={filiere}
+            onChange={(e) => setFiliere(e.target.value)} required>
+            <option value="">Choisir une filière</option>
+            <option value="GLSI">GLSI</option>
+            <option value="DSI">DSI</option>
+            <option value="RSI">RSI</option>
+            <option value="Informatique">Informatique</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="anneeEtude">Année d'étude :</label>
+          <select id="anneeEtude" value={anneeEtude}
+            onChange={(e) => setAnneeEtude(e.target.value)} required>
+            <option value="">Choisir une année</option>
+            <option value="1ère année">1ère année</option>
+            <option value="2ème année">2ème année</option>
+            <option value="3ème année">3ème année</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="groupe">Groupe :</label>
+          <input type="text" id="groupe" value={groupe}
+            onChange={(e) => setGroupe(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="ville">Ville :</label>
+          <input type="text" id="ville" value={ville}
+            onChange={(e) => setVille(e.target.value)} required />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="image">Image :</label>
+          <input type="file" id="image" accept="image/*"
+            onChange={handleImage} />
+        </div>
+
+        {image && (
+          <img src={image} alt="Photo étudiant" className="student-preview" />
         )}
 
-        <div className="formulaire-actions">
-          <button
-            type="button"
-            className="formulaire-btn-annuler"
-            onClick={onCancel}
-          >
-            Annuler
-          </button>
-
-          <button type="submit" className="formulaire-btn-enregistrer">
-            Enregistrer l'étudiant
-          </button>
-        </div>
+        <button type="submit">Ajouter</button>
       </form>
-    </section>
+    </div>
   );
 }
 
-export default AddStudentForm;
+export default StudentForm;

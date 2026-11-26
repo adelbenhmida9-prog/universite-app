@@ -1,6 +1,3 @@
-
-
-import { useState } from "react";
 import "./StidentCard.css";
 
 function StudentCard({
@@ -15,8 +12,6 @@ function StudentCard({
   onSupprimer,
   onModifier,
 }) {
-  const [coordonneesVisibles, setCoordonneesVisibles] = useState(false);
-
   const initiales = `${prenom.charAt(0)}${nom.charAt(0)}`;
 
   const modifierPrenom = () => {
@@ -58,25 +53,12 @@ function StudentCard({
       <div className="student-info">
         <p><strong>Année :</strong> {annee}</p>
         <p><strong>Groupe :</strong> {groupe}</p>
+        <p><strong>Email :</strong> {email}</p>
+        <p><strong>Téléphone :</strong> {telephone}</p>
+        <p><strong>Ville :</strong> {ville}</p>
       </div>
 
-      {coordonneesVisibles && (
-        <div className="student-coordonnees">
-          <p><strong>Email :</strong> {email}</p>
-          <p><strong>Téléphone :</strong> {telephone}</p>
-          <p><strong>Ville :</strong> {ville}</p>
-        </div>
-      )}
-
       <div className="student-card-actions">
-        <button
-          type="button"
-          className="student-btn-infos"
-          onClick={() => setCoordonneesVisibles((visible) => !visible)}
-        >
-          {coordonneesVisibles ? "Masquer les infos" : "Voir les infos"}
-        </button>
-
         <button
           type="button"
           className="student-btn-modifier"
